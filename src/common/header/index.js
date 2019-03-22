@@ -2,7 +2,7 @@ import React from 'react';
 import { HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Button, SearchWapper } from './style';
 import { CSSTransition } from 'react-transition-group';
 import { connect } from 'react-redux';
-import { getFocusAction, getBLURAction } from '../../store/actionCreator';
+import { getFocusAction, getBLURAction } from './store/actionCreator';
 
 const Header = (props) =>{
     return(

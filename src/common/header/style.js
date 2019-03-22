@@ -109,15 +109,16 @@ export const SearchWapper = styled.div`
     
     .iconfont{
         position: absolute;
-        width: 30px;
-        line-height: 30px;
-        text-line: center;
-        border-radius: 15px;
         right: 5px;
         bottom: 5px;
+        width: 30px;
+        line-height: 30px;
+        text-align: center;
+        border-radius: 15px;
         &.focused{
             background: #777;
             color: #fff;
+        }
     }
 
     
