@@ -1,8 +1,37 @@
 import React from 'react';
-import { HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Button, SearchWapper } from './style';
+import { HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Button, SearchWapper, SearchInfo, SearchInfoTitle, SearchInfoSwitch, SearchInfoItem, SearchInfoList } from './style';
 import { CSSTransition } from 'react-transition-group';
 import { connect } from 'react-redux';
-import { getFocusAction, getBLURAction } from './store/actionCreator';
+import { actionCreactos } from './store'
+
+const getListArea = (show) => {
+    if(show) {
+        return(
+            <SearchInfo>
+                <SearchInfoTitle>
+                    热门搜索
+                    <SearchInfoSwitch>
+                        换一批
+                    </SearchInfoSwitch>
+                </SearchInfoTitle>
+                <SearchInfoList>
+                    <SearchInfoItem>教育</SearchInfoItem>
+                    <SearchInfoItem>教育</SearchInfoItem>
+                    <SearchInfoItem>教育</SearchInfoItem>
+                    <SearchInfoItem>教育</SearchInfoItem>
+                    <SearchInfoItem>教育</SearchInfoItem>
+                    <SearchInfoItem>教育</SearchInfoItem>
+                    <SearchInfoItem>教育</SearchInfoItem>
+                    <SearchInfoItem>教育</SearchInfoItem>
+                    <SearchInfoItem>教育</SearchInfoItem>
+                    <SearchInfoItem>教育</SearchInfoItem>
+                </SearchInfoList>
+            </SearchInfo>
+        )
+    }else {
+        return null;
+    }
+}
 
 const Header = (props) =>{
     return(
@@ -37,6 +66,7 @@ const Header = (props) =>{
                     >
                         &#xe631;
                     </i>
+                    {getListArea(props.focused)}
                 </SearchWapper>
             </Nav>
             <Addition>
@@ -52,18 +82,18 @@ const Header = (props) =>{
 
 const mapStateToProps = (state) => {
     return{
-        focused: state.header.focused
+        focused: state.getIn(['header', 'focused'])
     }
 }
 
 const mapDispathToProps = (dispatch) => {
     return{
         handleInputFocus(){
-            const action = getFocusAction();
+            const action = actionCreactos.getFocusAction();
             dispatch(action);
         },
         handleInputFocusBlur() {
-            const action = getBLURAction();
+            const action = actionCreactos.getBLURAction();
             dispatch(action);
         }
     }

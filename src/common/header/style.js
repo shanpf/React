@@ -5,7 +5,7 @@ export const HeaderWrapper = styled.div`
     position: relative;
     height: 58px;
     border-bottom: 1px solid #f0f0f0;
-`
+`;
 export const Logo = styled.a.attrs({
     href: '/'
 })`
@@ -17,7 +17,7 @@ export const Logo = styled.a.attrs({
     height: 56px;
     background: url(${logoPic});
     background-size: contain;
-`
+`;
 
 export const  Nav = styled.div`
     width: 960px;
@@ -25,7 +25,7 @@ export const  Nav = styled.div`
     margin: 0 auto;
     padding-right: 70px;
     box-sizing: border-box;
-`
+`;
 
 export const NavItem = styled.div`
     &.left{
@@ -43,7 +43,7 @@ export const NavItem = styled.div`
     heigth: 100%;
     padding: 15px;
     font-size: 17px;
-`
+`;
 
 export const NavSearch = styled.input.attrs({
     placeholder: '搜索'
@@ -76,14 +76,14 @@ export const NavSearch = styled.input.attrs({
     &.slide-exit-active {
         width: 160px;
     }
-`
+`;
 
 export const Addition = styled.div`
     position: absolute;
     top: 0px;
     right: 0px;
     height: 56px;
-`
+`;
 
 export  const Button = styled.div`
     float: right
@@ -101,7 +101,7 @@ export  const Button = styled.div`
         color: #fff;
         background: #ec6149;
     }
-`
+`;
 
 export const SearchWapper = styled.div`
     float: left;
@@ -119,7 +119,44 @@ export const SearchWapper = styled.div`
             background: #777;
             color: #fff;
         }
-    }
+    }    
+`;
 
-    
-`
+export const SearchInfo = styled.div`
+    position: absolute;
+    left: 0;
+    top: 56px;
+    width: 240px;
+    padding: 0 20px;
+    box-shadow: 0 0 8px rgba( 0, 0, 0, .2);
+`;
+
+export const SearchInfoTitle = styled.div`
+    margin-top: 20px;
+    margin-bottom: 15px;
+    line-height: 20px;
+    font-size: 14px;
+    color: #969696;
+`;
+
+export const SearchInfoSwitch = styled.span`
+    float: right;
+    font-size: 13px;
+`;
+
+export const SearchInfoItem = styled.a`
+    display: block;
+    float: left;
+    line-height: 20px;
+    padding: 0 5px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    border: 1px solid #ddd;
+    color: #787878;
+    border-radius: 3px;
+`;
+
+export const SearchInfoList = styled.div`
+    overflow: hidden;
+`;
