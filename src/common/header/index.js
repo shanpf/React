@@ -44,7 +44,7 @@ class Header extends Component{
     }
 
     render (){
-        const { focused, handleInputFocus, handleInputFocusBlur } = this.props;
+        const { focused, list, handleInputFocus, handleInputFocusBlur } = this.props;
         return (
             <HeaderWrapper>
             <Logo />
@@ -69,7 +69,7 @@ class Header extends Component{
                     >
                         <NavSearch
                             className={!focused ? '': 'focused'}
-                            onFocus={handleInputFocus}
+                            onFocus={() => handleInputFocus(list)}
                             onBlur={handleInputFocusBlur}
                         ></NavSearch>
                     </CSSTransition>
@@ -104,8 +104,10 @@ const mapStateToProps = (state) => {
 
 const mapDispathToProps = (dispatch) => {
     return{
-        handleInputFocus() {
-            dispatch(actionCreactos.getListFromAjax());
+        handleInputFocus(list) {
+            if(list.size === 0) {
+                dispatch(actionCreactos.getListFromAjax());
+            }
             dispatch(actionCreactos.getFocusAction());
         },
         handleInputFocusBlur() {
