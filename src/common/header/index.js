@@ -7,7 +7,8 @@ import { actionCreactos } from './store'
 class Header extends Component{
 
     getListArea = () => {
-        if(this.props.focused) {
+        const { focused, list} = this.props;
+        if(focused) {
             return(
                 <SearchInfo>
                     <SearchInfoTitle>
@@ -18,10 +19,9 @@ class Header extends Component{
                     </SearchInfoTitle>
                     <SearchInfoList>
                         {
-                            this.props.list.map((item) => {
+                            list.map((item) => {
                                 return <SearchInfoItem key={item}>{item}</SearchInfoItem>
                             })
-
                         }
                     </SearchInfoList>
                 </SearchInfo>
@@ -32,6 +32,7 @@ class Header extends Component{
     }
 
     render (){
+        const { focused, handleInputFocus, handleInputFocusBlur } = this.props;
         return (
             <HeaderWrapper>
             <Logo />
@@ -50,17 +51,17 @@ class Header extends Component{
                 </NavItem>
                 <SearchWapper>
                     <CSSTransition
-                        in={this.props.focused}
+                        in={focused}
                         timeout={10000}
                         classNames="slide"
                     >
                         <NavSearch
-                            className={!this.props.focused ? '': 'focused'}
-                            onFocus={this.props.handleInputFocus}
-                            onBlur={this.props.handleInputFocusBlur}
+                            className={!focused ? '': 'focused'}
+                            onFocus={handleInputFocus}
+                            onBlur={handleInputFocusBlur}
                         ></NavSearch>
                     </CSSTransition>
-                    <i className={!this.props.focused ? 'iconfont': 'focused iconfont'}
+                    <i className={!focused ? 'iconfont': 'focused iconfont'}
                     >
                         &#xe631;
                     </i>
@@ -68,7 +69,7 @@ class Header extends Component{
                 </SearchWapper>
             </Nav>
             <Addition>
-                <Button className='writting'>
+                <Button className='writing'>
                     <i className="iconfont">&#xe617;</i>
                     写文章
                 </Button>
