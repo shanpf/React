@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Button, SearchWapper, SearchInfo, SearchInfoTitle, SearchInfoSwitch, SearchInfoItem, SearchInfoList } from './style';
+import { HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Button, SearchWrapper, SearchInfo, SearchInfoTitle, SearchInfoSwitch, SearchInfoItem, SearchInfoList } from './style';
 import { CSSTransition } from 'react-transition-group';
 import { connect } from 'react-redux';
 import { actionCreactos } from './store'
@@ -7,21 +7,33 @@ import { actionCreactos } from './store'
 class Header extends Component{
 
     getListArea = () => {
-        const { focused, list} = this.props;
-        if(focused) {
+        const { focused, list, page, totalPage, mouseIn, handleOnMouseEnter, handleOnMouseLeave, handleChangePage } = this.props;
+        const jsList = list.toJS();
+        const pageList = [];
+
+        if(jsList.length) {
+            for (let i = page * 10; i < (page + 1) * 10; i++) {
+                if (jsList[i] != null) {
+                    pageList.push(
+                        <SearchInfoItem key={i}>{jsList[i]}</SearchInfoItem>
+                    )
+                }
+            }
+        }
+
+        if(focused || mouseIn) {
             return(
-                <SearchInfo>
+                <SearchInfo onMouseEnter={handleOnMouseEnter} onMouseLeave={handleOnMouseLeave}>
                     <SearchInfoTitle>
                         热门搜索
-                        <SearchInfoSwitch>
+                        <SearchInfoSwitch onClick={() => handleChangePage( page, totalPage, this.spinIcon)}>
+                            <i ref={(icon) =>{this.spinIcon = icon }} className="iconfont spin">&#xe612;</i>
                             换一批
                         </SearchInfoSwitch>
                     </SearchInfoTitle>
                     <SearchInfoList>
                         {
-                            list.map((item) => {
-                                return <SearchInfoItem key={item}>{item}</SearchInfoItem>
-                            })
+                            pageList
                         }
                     </SearchInfoList>
                 </SearchInfo>
@@ -49,7 +61,7 @@ class Header extends Component{
                 <NavItem className='right'>
                     <i className="iconfont">&#xe636;</i>
                 </NavItem>
-                <SearchWapper>
+                <SearchWrapper>
                     <CSSTransition
                         in={focused}
                         timeout={10000}
@@ -61,12 +73,12 @@ class Header extends Component{
                             onBlur={handleInputFocusBlur}
                         ></NavSearch>
                     </CSSTransition>
-                    <i className={!focused ? 'iconfont': 'focused iconfont'}
+                    <i className={!focused ? 'iconfont zoom': 'focused iconfont zoom'}
                     >
                         &#xe631;
                     </i>
                     {this.getListArea()}
-                </SearchWapper>
+                </SearchWrapper>
             </Nav>
             <Addition>
                 <Button className='writing'>
@@ -83,7 +95,10 @@ class Header extends Component{
 const mapStateToProps = (state) => {
     return{
         focused: state.getIn(['header', 'focused']),
-        list: state.getIn(['header', 'list'])
+        list: state.getIn(['header', 'list']),
+        page: state.getIn(['header', 'page']),
+        totalPage: state.getIn(['header', 'totalPage']),
+        mouseIn: state.getIn(['header', 'mouseIn'])
     }
 }
 
@@ -95,6 +110,26 @@ const mapDispathToProps = (dispatch) => {
         },
         handleInputFocusBlur() {
             dispatch(actionCreactos.getBLURAction());
+        },
+        handleOnMouseEnter(){
+            dispatch(actionCreactos.getMouseEnterAction());
+        },
+        handleOnMouseLeave(){
+            dispatch(actionCreactos.getMouseLeaveAction());
+        },
+        handleChangePage( page, totalPage, spinIcon){
+            let originAngle = spinIcon.style.transform.replace(/[^0-9]/ig, '');
+            if(originAngle) {
+                originAngle = parseInt(originAngle, 10);
+            }else {
+                originAngle = 0;
+            }
+            spinIcon.style.transform = 'rotate(' + (originAngle + 360) + 'deg)'
+            if(page+1 < totalPage) {
+                dispatch(actionCreactos.getChangePageAction(page + 1));
+            }else if(page+1 === totalPage){
+                dispatch(actionCreactos.getChangePageAction(0));
+            }
         }
     }
 };
